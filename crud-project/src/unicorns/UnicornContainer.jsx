@@ -10,9 +10,10 @@ const UnicornContainer = () => {
 
     const [dataUnicorn, setDataUnicorn] = useState([]);
     const [loadingUnicorn, setLoadingUnicorn] = useState(true);
-    const [showModal, setShowModal] = useState(false);
+    const [showModal, setShowModal] = useState(false); /* para que aparezca el form cerrado al iniciar */
     const [editingUnicorn, setEditingUnicorn] = useState(null);
 
+    /* Declaro el nuevo unicornio (vacio, luego lo completo con los datos del form) */
     const [newUnicorn, setNewUnicorn] = useState({
         name: '',
         color: '',
@@ -20,6 +21,7 @@ const UnicornContainer = () => {
         power: ''
     });
 
+    /* Get */
     const fetchUnicorns = async () => {
         try {
             const res = await fetch(API_URL);
@@ -31,10 +33,12 @@ const UnicornContainer = () => {
         }
     };
 
+    /* Traigo los unicornios */
     useEffect(() => {
         fetchUnicorns();
     }, []);
 
+    /* Voy actualizando el form */
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNewUnicorn((prev) => ({
@@ -43,6 +47,7 @@ const UnicornContainer = () => {
         }));
     };
 
+    /* Añado */
     const handleAddUnicorn = async () => {
         try {
             const res = await fetch(API_URL, {
@@ -60,6 +65,7 @@ const UnicornContainer = () => {
         }
     };
 
+    /* Edito */
     const handleEditUnicorn = async () => {
         try {
             const res = await fetch(`${API_URL}/${editingUnicorn._id}`, {
@@ -78,6 +84,8 @@ const UnicornContainer = () => {
         }
     };
 
+
+    /* Elimino */
     const handleDeleteUnicorn = async (id) => {
         try {
             await fetch(`${API_URL}/${id}`, { method: "DELETE" });
@@ -87,12 +95,14 @@ const UnicornContainer = () => {
         }
     };
 
+    /* Reset al form cuando añado */
     const openModalToAdd = () => {
         setEditingUnicorn(null);
         setNewUnicorn({ name: '', color: '', age: null, power: '' });
         setShowModal(true);
     };
 
+    /* Form editar */
     const openModalToEdit = (unicorn) => {
         setEditingUnicorn(unicorn);
         setNewUnicorn({

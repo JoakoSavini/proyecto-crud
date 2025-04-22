@@ -1,13 +1,13 @@
-import UnicornsView from './UnicornsView';
-import UnicornForm from './UnicornForm';
+import { Routes, Route } from "react-router-dom";
+import UnicornsView from "./UnicornsView";
+import UnicornForm from "./UnicornForm";
 
-const UnicornRoutes = () => {
+export default function UnicornRoutes() {
     return (
-        <>
-            <UnicornForm />
-            <UnicornsView />
-        </>
+        <Routes>
+            <Route path="/" element={<UnicornsView />} />
+            <Route path="/crear" element={<UnicornForm />} />
+            <Route path="/editar/:id" element={<UnicornForm />} />
+        </Routes>
     );
-};
-
-export default UnicornRoutes;
+}

@@ -4,7 +4,7 @@ import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'https://crudcrud.com/api/afb22a452a8a441aa2cadda52e4d78a6/products';
+const API_URL = '/api/products';
 
 const ProductView = () => {
     const [products, setProducts] = useState([]);

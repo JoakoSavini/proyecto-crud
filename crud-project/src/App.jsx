@@ -1,16 +1,16 @@
-// src/App.jsx
-import 'primereact/resources/themes/lara-light-indigo/theme.css';  // o el tema que uses
-import 'primereact/resources/primereact.min.css';
-import 'primeicons/primeicons.css';
-import 'primeflex/primeflex.css';
-
-import UnicornContainer from './unicorns';
+import UnicornsModule from './layouts/unicorns';
+import { UnicornProvider } from './context/UnicornContext';
+import ObjectsModule from './layouts/objects';
+import { Fragment } from 'react';
 
 function App() {
   return (
-    <div className="App">
-      <UnicornContainer />
-    </div>
+    <Fragment>
+      <UnicornProvider>
+        <UnicornsModule />
+      </UnicornProvider>
+      <ObjectsModule />
+    </Fragment>
   );
 }
 

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export const UnicornContext = createContext();
 
 export const UnicornProvider = ({ children }) => {
-    const API_URL = '/api/unicorns';
+    const API_URL = 'https://crudcrud.com/api/85aea305784f430f8f09b953631471d4/unicorns';
     const [unicorns, setUnicorns] = useState([]);
     const [editingUnicorn, setEditingUnicorn] = useState(null);
     const navigate = useNavigate();
@@ -29,7 +29,7 @@ export const UnicornProvider = ({ children }) => {
                 body: JSON.stringify(unicorn),
             });
             getUnicorns();
-            navigate('/unicornios');
+            navigate('');
         } catch (error) {
             console.error('Error al crear unicornio:', error);
         }
@@ -53,7 +53,7 @@ export const UnicornProvider = ({ children }) => {
 
             setEditingUnicorn(null);
             getUnicorns();
-            navigate('/unicornios');
+            navigate('');
         } catch (error) {
             console.error('Error al actualizar unicornio:', error);
         }

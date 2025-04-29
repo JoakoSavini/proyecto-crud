@@ -41,7 +41,7 @@ const ProductForm = ({ initialValues, onSubmit, editingProduct, cancelEdit }) =>
                     <div className="flex gap-2 mt-4">
                         <Button
                             style={{ color: 'white' }}
-                            label={editingProduct ? 'Editar Productio' : 'Crear Productio'}
+                            label={editingProduct ? 'Editar Producto' : 'Crear Producto'}
                             type='submit'
                         />
                         {editingProduct && (

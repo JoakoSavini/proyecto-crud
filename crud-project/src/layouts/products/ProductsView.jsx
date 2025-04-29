@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Button } from 'primereact/button';
 import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
-import ProductContext from './miniContextProduct';
+import { ProductContext } from './miniContextProduct';
 import ProductForm from './ProductForm';
 
 

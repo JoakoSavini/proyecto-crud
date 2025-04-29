@@ -1,33 +1,26 @@
 import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const UnicornContext = createContext();
-
 export const UnicornProvider = ({ children }) => {
     const API_URL = 'https://crudcrud.com/api/85aea305784f430f8f09b953631471d4/unicorns';
     const [unicorns, setUnicorns] = useState([]);
     const [editingUnicorn, setEditingUnicorn] = useState(null);
     const navigate = useNavigate();
 
-    // Obtener todos los unicornios
     const getUnicorns = async () => {
         try {
-            const res = await fetch(API_URL);
-            const data = await res.json();
+            const { data } = await axios.get(API_URL);
             setUnicorns(data);
         } catch (error) {
             console.error('Error al obtener unicornios:', error);
         }
     };
 
-    // Crear unicornio
     const createUnicorn = async (unicorn) => {
         try {
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(unicorn),
-            });
+            await axios.post(API_URL, unicorn);
             getUnicorns();
             navigate('');
         } catch (error) {
@@ -35,22 +28,15 @@ export const UnicornProvider = ({ children }) => {
         }
     };
 
-    // Actualizar unicornio
     const updateUnicorn = async (unicorn) => {
         try {
-            await fetch(`${API_URL}/${unicorn._id}`, { method: 'DELETE' });
-
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: unicorn.name,
-                    age: unicorn.age,
-                    color: unicorn.color,
-                    power: unicorn.power,
-                }),
+            await axios.delete(`${API_URL}/${unicorn._id}`);
+            await axios.post(API_URL, {
+                name: unicorn.name,
+                age: unicorn.age,
+                color: unicorn.color,
+                power: unicorn.power,
             });
-
             setEditingUnicorn(null);
             getUnicorns();
             navigate('');
@@ -59,10 +45,9 @@ export const UnicornProvider = ({ children }) => {
         }
     };
 
-    // Eliminar unicornio
     const deleteUnicorn = async (id) => {
         try {
-            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+            await axios.delete(`${API_URL}/${id}`);
             getUnicorns();
         } catch (error) {
             console.error('Error al eliminar unicornio:', error);

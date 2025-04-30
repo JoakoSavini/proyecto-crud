@@ -4,6 +4,7 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { UnicornContext } from "../../context/UnicornContext";
 import UnicornForm from './UnicornForm';
+import { exportPdf } from '../../utils/exportPdf';
 
 const UnicornsView = () => {
     const { unicorns, deleteUnicorn, createUnicorn, updateUnicorn } = useContext(UnicornContext);
@@ -43,6 +44,8 @@ const UnicornsView = () => {
         </div>
     );
 
+    const columns = ["Nombre", "Edad", "Color", "Poder"]
+
     return (
         <div className="p-6" style={{ backgroundColor: '#121212', minHeight: '100vh', color: '#ffffff' }}>
             <h2 className="text-2xl mb-8">🦄 Gestión de Unicornios</h2>
@@ -56,6 +59,14 @@ const UnicornsView = () => {
             />
 
             {/* Tabla */}
+            <Button
+                label="Exportar PDF"
+                className="p-button-secondary"
+                onClick={() => {
+                    exportPdf(unicorns, 'Unicornios', columns)
+                }}
+                type="button"
+            />
             <DataTable
                 value={unicorns}
                 tableStyle={{ minWidth: '50rem' }}
@@ -72,6 +83,7 @@ const UnicornsView = () => {
                 />
             </DataTable>
         </div>
+
     );
 };
 

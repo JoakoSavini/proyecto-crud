@@ -4,19 +4,22 @@ import autoTable from "jspdf-autotable";
 export const exportPdf = (data, title, columns) => {
     const doc = new jsPDF();
 
-    // 📌 Título grande y estilizado
+    // Fondo general 
+    doc.setFillColor(17, 24, 39); 
+    doc.rect(0, 0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
+
+    // Título 
     doc.setFont("helvetica", "bold");
     doc.setFontSize(24);
-    doc.setTextColor(55, 55, 55);
+    doc.setTextColor(255, 255, 255); 
     doc.text(`Listado de ${title}`, 105, 20, null, null, "center");
 
-    // 📌 Subtítulo con fecha
+    // Subtítulo con fecha 
     doc.setFontSize(11);
-    doc.setTextColor(100, 100, 100);
+    doc.setTextColor(200, 200, 200);
     const today = new Date();
     doc.text(`Generado el: ${today.toLocaleDateString()}`, 14, 30);
 
-    // 📌 Prepara datos de tabla
     const tableColumn = columns;
     const tableRows = [];
 
@@ -30,7 +33,7 @@ export const exportPdf = (data, title, columns) => {
         tableRows.push(itemData);
     });
 
-    // 📌 AutoTable con estilo moderno
+    // Le agrego estilo oscuro
     autoTable(doc, {
         head: [tableColumn],
         body: tableRows,
@@ -38,26 +41,28 @@ export const exportPdf = (data, title, columns) => {
         styles: {
             fontSize: 12,
             cellPadding: 4,
-            textColor: [60, 60, 60],
-            lineColor: [220, 220, 220],
+            textColor: [255, 255, 255],  
+            fillColor: [17, 24, 39],     
+            lineColor: [51, 65, 85],     
             lineWidth: 0.2,
         },
         headStyles: {
-            fillColor: [51, 153, 255],   // Color pastel tipo dashboard
+            fillColor: [18, 23, 38],     // Encabezado
             textColor: [255, 255, 255],
             fontSize: 13,
             halign: "center",
             valign: "middle",
         },
-        alternateRowStyles: { fillColor: [245, 245, 245] }, // Gris clarito
-        tableLineColor: [230, 230, 230],
+        alternateRowStyles: {
+            fillColor: [31, 41, 55],     // item x item
+        },
+        tableLineColor: [75, 85, 99],     // item x item
         tableLineWidth: 0.1,
         margin: { top: 40 },
         didDrawPage: (data) => {
-            // 📌 Footer en cada página
             const pageCount = doc.internal.getNumberOfPages();
             doc.setFontSize(10);
-            doc.setTextColor(120, 120, 120);
+            doc.setTextColor(180, 180, 180); 
             doc.text(
                 `Página ${doc.internal.getCurrentPageInfo().pageNumber} de ${pageCount}`,
                 doc.internal.pageSize.getWidth() - 20,
@@ -69,6 +74,6 @@ export const exportPdf = (data, title, columns) => {
         },
     });
 
-    // 📌 Guarda PDF
+    // Guardo el PDF
     doc.save(`${title}.pdf`);
 };

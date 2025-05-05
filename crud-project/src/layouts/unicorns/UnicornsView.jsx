@@ -47,43 +47,56 @@ const UnicornsView = () => {
     const columns = ["Nombre", "Edad", "Color", "Poder"]
 
     return (
-        <div className="p-6" style={{ backgroundColor: '#121212', minHeight: '100vh', color: '#ffffff' }}>
-            <h2 className="text-2xl mb-8">🦄 Gestión de Unicornios</h2>
+        <div className="p-6 flex flex-col items-center justify-center min-h-screen bg-gray-800 text-white">
+    <h2 className="text-3xl mb-8">🦄 Gestión de Unicornios</h2>
 
-            {/* Formulario */}
-            <UnicornForm
-                initialValues={initialValues}
-                onSubmit={handleSubmit}
-                editingUnicorn={editingUnicorn}
-                cancelEdit={() => setEditingUnicorn(null)}
-            />
+    {/* Formulario */}
+    <div className="w-full flex justify-center mb-8">
+    <div className="w-full max-w-md">
+        <UnicornForm
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            editingUnicorn={editingUnicorn}
+            cancelEdit={() => setEditingUnicorn(null)}
+        />
+    </div>
+</div>
 
-            {/* Tabla */}
-            <Button
-                label="Exportar PDF"
-                style={{ backgroundColor: '#d9534f', border: 'none', color: '#fff' }}
-                className="p-button-secondary"
-                onClick={() => {
-                    exportPdf(unicorns, 'Unicornios', columns)
-                }}
-                type="button"
+
+    {/* Botón Exportar */}
+    <div className="mb-8">
+        <Button
+            label="Exportar PDF"
+            style={{ backgroundColor: '#d9534f', border: 'none', color: '#fff' }}
+            className="p-button-secondary"
+            onClick={() => {
+                exportPdf(unicorns, 'Unicornios', columns)
+            }}
+            type="button"
+        />
+    </div>
+
+    {/* Tabla */}
+    <div className="w-full max-w-4xl">
+        <DataTable
+            value={unicorns}
+            tableStyle={{ minWidth: '50rem' }}
+            className="p-datatable-sm"
+            rowClassName={() => 'custom-row-spacing'} 
+        >
+            <Column field="name" header="Nombre" />
+            <Column field="age" header="Edad" />
+            <Column field="color" header="Color" />
+            <Column field="power" header="Poder" />
+            <Column
+                body={actionBodyTemplate}
+                header="Acciones"
+                style={{ width: '12rem' }}
             />
-            <DataTable
-                value={unicorns}
-                tableStyle={{ minWidth: '50rem' }}
-                className="p-datatable-sm"
-            >
-                <Column field="name" header="Nombre" />
-                <Column field="age" header="Edad" />
-                <Column field="color" header="Color" />
-                <Column field="power" header="Poder" />
-                <Column
-                    body={actionBodyTemplate}
-                    header="Acciones"
-                    style={{ width: '12rem' }}
-                />
-            </DataTable>
-        </div>
+        </DataTable>
+    </div>
+</div>
+
 
     );
 };

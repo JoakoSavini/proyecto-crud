@@ -61,6 +61,7 @@ const UnicornsView = () => {
             {/* Tabla */}
             <Button
                 label="Exportar PDF"
+                style={{ backgroundColor: '#d9534f', border: 'none', color: '#fff' }}
                 className="p-button-secondary"
                 onClick={() => {
                     exportPdf(unicorns, 'Unicornios', columns)

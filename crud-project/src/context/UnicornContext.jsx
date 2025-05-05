@@ -1,10 +1,11 @@
 import { createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const UnicornContext = createContext();
 
 export const UnicornProvider = ({ children }) => {
-    const API_URL = 'https://crudcrud.com/api/85aea305784f430f8f09b953631471d4/unicorns';
+    const API_URL = 'https://crudcrud.com/api/e535f52cf8f444a5af9591bc3da4fe90/unicorns';
     const [unicorns, setUnicorns] = useState([]);
     const [editingUnicorn, setEditingUnicorn] = useState(null);
     const navigate = useNavigate();
@@ -12,8 +13,7 @@ export const UnicornProvider = ({ children }) => {
     // Obtener todos los unicornios
     const getUnicorns = async () => {
         try {
-            const res = await fetch(API_URL);
-            const data = await res.json();
+            const { data } = await axios.get(API_URL);
             setUnicorns(data);
         } catch (error) {
             console.error('Error al obtener unicornios:', error);
@@ -23,36 +23,28 @@ export const UnicornProvider = ({ children }) => {
     // Crear unicornio
     const createUnicorn = async (unicorn) => {
         try {
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(unicorn),
-            });
-            getUnicorns();
+            await axios.post(API_URL, unicorn);
+            await getUnicorns();
             navigate('');
         } catch (error) {
             console.error('Error al crear unicornio:', error);
         }
     };
 
-    // Actualizar unicornio
+    // Actualizar unicornio (CrudCrud no permite PUT, así que se borra y se crea)
     const updateUnicorn = async (unicorn) => {
         try {
-            await fetch(`${API_URL}/${unicorn._id}`, { method: 'DELETE' });
+            await axios.delete(`${API_URL}/${unicorn._id}`);
 
-            await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    name: unicorn.name,
-                    age: unicorn.age,
-                    color: unicorn.color,
-                    power: unicorn.power,
-                }),
+            await axios.post(API_URL, {
+                name: unicorn.name,
+                age: unicorn.age,
+                color: unicorn.color,
+                power: unicorn.power,
             });
 
             setEditingUnicorn(null);
-            getUnicorns();
+            await getUnicorns();
             navigate('');
         } catch (error) {
             console.error('Error al actualizar unicornio:', error);
@@ -62,8 +54,8 @@ export const UnicornProvider = ({ children }) => {
     // Eliminar unicornio
     const deleteUnicorn = async (id) => {
         try {
-            await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
-            getUnicorns();
+            await axios.delete(`${API_URL}/${id}`);
+            await getUnicorns();
         } catch (error) {
             console.error('Error al eliminar unicornio:', error);
         }

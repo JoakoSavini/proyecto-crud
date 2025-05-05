@@ -47,13 +47,14 @@ const UnicornForm = ({ initialValues, onSubmit, editingUnicorn, cancelEdit }) =>
                     </div>
                     <div className="flex gap-2 mt-4">
                         <Button
-                            style={{ color: 'white' }}
+                            style={{ backgroundColor: '#3FAB37', border: 'none', color: '#fff' }}
                             label={editingUnicorn ? 'Editar unicornio' : 'Crear unicornio'}
                             type='submit'
                         />
                         {editingUnicorn && (
                             <Button
                                 label="Cancelar"
+                                style={{ backgroundColor: '#21C615', border: 'none', color: '#fff' }}
                                 className="p-button-secondary"
                                 onClick={() => {
                                     cancelEdit();

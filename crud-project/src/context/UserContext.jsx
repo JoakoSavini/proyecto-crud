@@ -5,7 +5,7 @@ import axios from 'axios';
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const API_URL = 'http://localhost:3000/usuarios';
+    const API_URL = 'http://localhost:3001/usuarios';
     const [users, setUsers] = useState([]);
     const [editingUser, setEditingUser] = useState(null);
     const navigate = useNavigate();
@@ -31,17 +31,11 @@ export const UserProvider = ({ children }) => {
         }
     };
 
-    // Actualizar Users (CrudCrud no permite PUT, así que se borra y se crea)
+    // Actualizar Users 
     const updateUser = async (user) => {
         try {
-            await axios.delete(`${API_URL}/${user._id}`);
-
-            await axios.post(API_URL, {
-                name: user.name,
-                email: user.email,
-                age: user.age,
-            });
-
+            console.log('Actualizando usuario:', user);
+            await axios.put(`${API_URL}/${user.id}`, user);
             setEditingUser(null);
             await getUsers();
             navigate('');

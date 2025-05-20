@@ -5,7 +5,7 @@ import axios from 'axios';
 export const ProductContext = createContext();
 
 export const ProductProvider = ({ children }) => {
-    const API_URL = 'http://localhost:3000/productos';
+    const API_URL = 'http://localhost:3001/productos';
     const [products, setProducts] = useState([]);
     const [editingProduct, setEditingProduct] = useState(null);
     const navigate = useNavigate();
@@ -33,9 +33,10 @@ export const ProductProvider = ({ children }) => {
         }
     };
 
+    // Actualizar Product
     const updateProduct = async (product) => {
         try {
-            await axios.put(`${API_URL}/${product._id}`, product);
+            await axios.put(`${API_URL}/${product.id}`, product);
             setEditingProduct(null);
             await getProducts();
             navigate('');

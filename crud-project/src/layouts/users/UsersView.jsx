@@ -37,7 +37,7 @@ const UsersView = () => {
             <Button
                 label="Eliminar"
                 icon="pi pi-trash"
-                onClick={() => deleteUser(rowData._id)}
+                onClick={() => deleteUser(rowData.id)}
                 style={{ backgroundColor: '#d9534f', border: 'none', color: '#fff' }}
             />
         </div>

@@ -27,7 +27,7 @@ export const ProductProvider = ({ children }) => {
         try {
             await axios.post(API_URL, product);
             await getProducts();
-            navigate('');
+            navigate('/productos');
         } catch (error) {
             console.error('Error al crear Producto:', error);
         }
@@ -39,7 +39,7 @@ export const ProductProvider = ({ children }) => {
             await axios.put(`${API_URL}/${product.id}`, product);
             setEditingProduct(null);
             await getProducts();
-            navigate('');
+            navigate('/productos');
         } catch (error) {
             console.error('Error al actualizar Producto:', error);
         }

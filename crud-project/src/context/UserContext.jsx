@@ -25,7 +25,7 @@ export const UserProvider = ({ children }) => {
         try {
             await axios.post(API_URL, user);
             await getUsers();
-            navigate('');
+            navigate('/usuarios');
         } catch (error) {
             console.error('Error al crear Users:', error);
         }
@@ -38,7 +38,7 @@ export const UserProvider = ({ children }) => {
             await axios.put(`${API_URL}/${user.id}`, user);
             setEditingUser(null);
             await getUsers();
-            navigate('');
+            navigate('/usuarios');
         } catch (error) {
             console.error('Error al actualizar Users:', error);
         }

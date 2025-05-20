@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function Home() {
     return (
         <div className="min-h-screen bg-gray-900 flex flex-col items-center justify-center text-white">
-            <h1 className="text-4xl font-bold mb-8">Bienvenido al CRUD</h1>
+            <h1 className="text-4xl font-bold mb-8">Sistema de Gestión</h1>
             <div className="flex space-x-6">
                 <Link
                     to="/usuarios"

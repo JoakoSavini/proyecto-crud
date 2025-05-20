@@ -1,17 +1,18 @@
-import { BrowserRouter } from 'react-router-dom'; // Importa BrowserRouter
-import UnicornsModule from './layouts/unicorns';
-import { UnicornProvider } from './context/UnicornContext';
-/* import ProductsModule from './layouts/products'; */
-import { Fragment } from 'react';
+import UsersContainer from "./layouts/users";
+import ProductsContainer from "./layouts/products";
+import { UserProvider } from "./context/UserContext";
+import { ProductProvider } from "./context/ProductContext";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter>  {/* Envuelve tu App con el Router */}
-        
-        <UnicornProvider>
-          <UnicornsModule />
-        </UnicornProvider>
-
+    <BrowserRouter>
+      <UserProvider>
+        <ProductProvider>
+          <UsersContainer />
+          <ProductsContainer />
+        </ProductProvider>
+      </UserProvider>
     </BrowserRouter>
   );
 }
